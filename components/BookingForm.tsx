@@ -1,12 +1,23 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
-import { saveMyBooking } from "@/lib/my-bookings";
+import { useState, useSyncExternalStore, type FormEvent } from "react";
+import { getMyName, saveMyBooking, saveMyName } from "@/lib/my-bookings";
 
 type Status = "idle" | "submitting" | "success" | "error";
 
+function subscribeNoop() {
+  return () => {};
+}
+
+function getServerSnapshot() {
+  return "";
+}
+
 export default function BookingForm({ spot, date }: { spot: string; date: string }) {
+  const rememberedName = useSyncExternalStore(subscribeNoop, getMyName, getServerSnapshot);
   const [name, setName] = useState("");
+  const [nameTouched, setNameTouched] = useState(false);
+  const displayedName = nameTouched ? name : rememberedName;
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState("");
@@ -20,7 +31,7 @@ export default function BookingForm({ spot, date }: { spot: string; date: string
       const res = await fetch("/api/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, email, spot, date }),
+        body: JSON.stringify({ name: displayedName, email, spot, date }),
       });
 
       const data = await res.json().catch(() => null);
@@ -34,6 +45,7 @@ export default function BookingForm({ spot, date }: { spot: string; date: string
       if (data?.cancelToken) {
         saveMyBooking({ spot, date, cancelToken: data.cancelToken });
       }
+      saveMyName(displayedName);
       setStatus("success");
     } catch {
       setStatus("error");
@@ -62,8 +74,11 @@ export default function BookingForm({ spot, date }: { spot: string; date: string
         <input
           id="name"
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={displayedName}
+          onChange={(e) => {
+            setNameTouched(true);
+            setName(e.target.value);
+          }}
           className="w-full rounded border border-zinc-300 px-3 py-2"
         />
       </div>

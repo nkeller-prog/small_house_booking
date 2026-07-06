@@ -1,4 +1,5 @@
 const STORAGE_KEY = "myBookings";
+const NAME_STORAGE_KEY = "myName";
 
 export type MyBooking = { spot: string; date: string; cancelToken: string };
 
@@ -28,4 +29,13 @@ export function removeMyBookingByToken(token: string) {
     STORAGE_KEY,
     JSON.stringify(existing.filter((b) => b.cancelToken !== token)),
   );
+}
+
+export function getMyName(): string {
+  if (typeof window === "undefined") return "";
+  return localStorage.getItem(NAME_STORAGE_KEY) ?? "";
+}
+
+export function saveMyName(name: string) {
+  localStorage.setItem(NAME_STORAGE_KEY, name);
 }

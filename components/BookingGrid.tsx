@@ -6,9 +6,11 @@ import BookedCell from "./BookedCell";
 export default function BookingGrid({
   dates,
   bookingMap,
+  today,
 }: {
   dates: string[];
   bookingMap: Record<string, string>;
+  today: string;
 }) {
   return (
     <div className="overflow-x-auto rounded-lg border border-zinc-200">
@@ -31,10 +33,13 @@ export default function BookingGrid({
               </td>
               {SPOTS.map((spot) => {
                 const bookedBy = bookingMap[`${spot.id}|${date}`];
+                const isPast = date < today;
                 return (
                   <td key={spot.id} className="p-2">
                     {bookedBy ? (
                       <BookedCell spot={spot.id} date={date} bookedByName={bookedBy} />
+                    ) : isPast ? (
+                      <span className="inline-block rounded px-2 py-1 text-zinc-300">—</span>
                     ) : (
                       <Link
                         href={`/book?spot=${spot.id}&date=${date}`}

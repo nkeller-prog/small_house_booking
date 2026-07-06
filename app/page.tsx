@@ -1,15 +1,28 @@
-import { format, addDays, startOfDay } from "date-fns";
+import Link from "next/link";
+import { format, startOfDay } from "date-fns";
 import { getSupabaseServerClient } from "@/lib/supabase";
-import { UPCOMING_DAYS } from "@/lib/spots";
+import {
+  getAdjacentAnchor,
+  getRangeDates,
+  getRangeLabel,
+  parseAnchor,
+  parseViewMode,
+} from "@/lib/calendar-range";
 import BookingGrid from "@/components/BookingGrid";
 
 export const dynamic = "force-dynamic";
 
-export default async function HomePage() {
-  const today = startOfDay(new Date());
-  const dates = Array.from({ length: UPCOMING_DAYS }, (_, i) =>
-    format(addDays(today, i), "yyyy-MM-dd"),
-  );
+export default async function HomePage({
+  searchParams,
+}: {
+  searchParams: Promise<{ view?: string; anchor?: string }>;
+}) {
+  const params = await searchParams;
+  const view = parseViewMode(params.view);
+  const anchor = parseAnchor(params.anchor);
+  const anchorParam = format(anchor, "yyyy-MM-dd");
+  const dates = getRangeDates(view, anchor);
+  const today = format(startOfDay(new Date()), "yyyy-MM-dd");
 
   const bookingMap: Record<string, string> = {};
   let loadError = false;
@@ -32,16 +45,46 @@ export default async function HomePage() {
     loadError = true;
   }
 
+  const prevAnchor = getAdjacentAnchor(view, anchor, -1);
+  const nextAnchor = getAdjacentAnchor(view, anchor, 1);
+
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
       <h1 className="mb-1 text-3xl font-extrabold text-brand-blue">Atomic House Booking</h1>
       <p className="mb-6 text-brand-gray">Pick a spot and a night to reserve your stay.</p>
+
+      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <div className="flex gap-2 text-sm">
+          <Link
+            href={`/?view=week&anchor=${anchorParam}`}
+            className={`rounded px-3 py-1 ${view === "week" ? "bg-brand-blue/25 font-medium text-blue-950" : "text-brand-gray hover:underline"}`}
+          >
+            Week
+          </Link>
+          <Link
+            href={`/?view=month&anchor=${anchorParam}`}
+            className={`rounded px-3 py-1 ${view === "month" ? "bg-brand-blue/25 font-medium text-blue-950" : "text-brand-gray hover:underline"}`}
+          >
+            Month
+          </Link>
+        </div>
+        <div className="flex items-center gap-3 text-sm">
+          <Link href={`/?view=${view}&anchor=${prevAnchor}`} className="text-brand-gray hover:underline">
+            &larr; Prev
+          </Link>
+          <span className="font-medium">{getRangeLabel(view, anchor)}</span>
+          <Link href={`/?view=${view}&anchor=${nextAnchor}`} className="text-brand-gray hover:underline">
+            Next &rarr;
+          </Link>
+        </div>
+      </div>
+
       {loadError ? (
         <p className="text-red-600">
           Couldn&apos;t load the calendar right now. Please refresh the page.
         </p>
       ) : (
-        <BookingGrid dates={dates} bookingMap={bookingMap} />
+        <BookingGrid dates={dates} bookingMap={bookingMap} today={today} />
       )}
     </main>
   );
