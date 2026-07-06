@@ -10,7 +10,7 @@ function getResendClient() {
 }
 
 function getEmailFrom() {
-  return process.env.EMAIL_FROM ?? "Atomic House <onboarding@resend.dev>";
+  return process.env.EMAIL_FROM ?? "Fab House <onboarding@resend.dev>";
 }
 
 function formatDate(date: string) {

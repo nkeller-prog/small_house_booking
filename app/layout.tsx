@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Atomic House Booking",
-  description: "Book a night at the Atomic house.",
+  title: "Fab House Booking",
+  description: "Book a night at the Fab house.",
 };
 
 export default function RootLayout({
