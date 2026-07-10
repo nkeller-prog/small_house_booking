@@ -1,7 +1,7 @@
 export const SPOTS = [
   { id: "big_bed", label: "Single Bed" },
-  { id: "bunk_top", label: "Bunk Bed — Top" },
-  { id: "bunk_bottom", label: "Bunk Bed — Bottom" },
+  { id: "bunk_top", label: "Top Bunk" },
+  { id: "bunk_bottom", label: "Bottom Bunk" },
   { id: "couch", label: "Couch" },
 ] as const;
 
