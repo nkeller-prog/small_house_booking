@@ -16,10 +16,12 @@ export default async function CancelPage({
   if (!token) {
     return (
       <main className="mx-auto max-w-md px-4 py-10">
-        <p className="text-red-600">That cancellation link looks invalid.</p>
-        <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
-          Back to calendar
-        </Link>
+        <div className="rounded-2xl bg-white/60 p-6 backdrop-blur-sm">
+          <p className="text-red-600">That cancellation link looks invalid.</p>
+          <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
+            Back to calendar
+          </Link>
+        </div>
       </main>
     );
   }
@@ -38,10 +40,12 @@ export default async function CancelPage({
     console.error("Failed to load booking for cancellation", err);
     return (
       <main className="mx-auto max-w-md px-4 py-10">
-        <p className="text-red-600">Couldn&apos;t load this booking right now. Please refresh the page.</p>
-        <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
-          Back to calendar
-        </Link>
+        <div className="rounded-2xl bg-white/60 p-6 backdrop-blur-sm">
+          <p className="text-red-600">Couldn&apos;t load this booking right now. Please refresh the page.</p>
+          <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
+            Back to calendar
+          </Link>
+        </div>
       </main>
     );
   }
@@ -49,10 +53,12 @@ export default async function CancelPage({
   if (!booking) {
     return (
       <main className="mx-auto max-w-md px-4 py-10">
-        <p className="text-red-600">We couldn&apos;t find that booking.</p>
-        <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
-          Back to calendar
-        </Link>
+        <div className="rounded-2xl bg-white/60 p-6 backdrop-blur-sm">
+          <p className="text-red-600">We couldn&apos;t find that booking.</p>
+          <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
+            Back to calendar
+          </Link>
+        </div>
       </main>
     );
   }
@@ -60,21 +66,25 @@ export default async function CancelPage({
   if (booking.cancelled_at) {
     return (
       <main className="mx-auto max-w-md px-4 py-10">
-        <p className="text-brand-gray">This booking has already been cancelled.</p>
-        <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
-          Back to calendar
-        </Link>
+        <div className="rounded-2xl bg-white/60 p-6 backdrop-blur-sm">
+          <p className="text-brand-gray">This booking has already been cancelled.</p>
+          <Link href="/" className="mt-4 inline-block text-sm text-brand-gray underline">
+            Back to calendar
+          </Link>
+        </div>
       </main>
     );
   }
 
   return (
     <main className="mx-auto max-w-md px-4 py-10">
-      <h1 className="mb-1 text-xl font-semibold">Cancel booking</h1>
-      <p className="mb-6 text-brand-gray">
-        {spotLabel(booking.spot)} on {format(parseISO(booking.booking_date), "EEEE, MMMM d, yyyy")}
-      </p>
-      <CancelButton token={token} />
+      <div className="rounded-2xl bg-white/60 p-6 backdrop-blur-sm">
+        <h1 className="mb-1 text-xl font-semibold">Cancel booking</h1>
+        <p className="mb-6 text-brand-gray">
+          {spotLabel(booking.spot)} on {format(parseISO(booking.booking_date), "EEEE, MMMM d, yyyy")}
+        </p>
+        <CancelButton token={token} />
+      </div>
     </main>
   );
 }
