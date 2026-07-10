@@ -50,32 +50,34 @@ export default async function HomePage({
 
   return (
     <main className="mx-auto max-w-3xl px-4 py-10">
-      <h1 className="mb-1 text-3xl font-extrabold text-brand-blue">Fab 2 House</h1>
-      <p className="mb-6 text-brand-gray">Choose a bed and a night to reserve your stay.</p>
+      <div className="mb-6 rounded-2xl bg-white/60 p-4 backdrop-blur-sm">
+        <h1 className="mb-1 text-3xl font-extrabold text-brand-blue">Fab 2 House</h1>
+        <p className="mb-4 text-brand-gray">Choose a bed and a night to reserve your stay.</p>
 
-      <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-        <div className="flex gap-2 text-sm">
-          <Link
-            href={`/?view=week&anchor=${anchorParam}`}
-            className={`rounded px-3 py-1 ${view === "week" ? "bg-brand-blue/25 font-medium text-blue-950" : "text-brand-gray hover:underline"}`}
-          >
-            Week
-          </Link>
-          <Link
-            href={`/?view=month&anchor=${anchorParam}`}
-            className={`rounded px-3 py-1 ${view === "month" ? "bg-brand-blue/25 font-medium text-blue-950" : "text-brand-gray hover:underline"}`}
-          >
-            Month
-          </Link>
-        </div>
-        <div className="flex items-center gap-3 text-sm">
-          <Link href={`/?view=${view}&anchor=${prevAnchor}`} className="text-brand-gray hover:underline">
-            &larr; Prev
-          </Link>
-          <span className="font-medium">{getRangeLabel(view, anchor)}</span>
-          <Link href={`/?view=${view}&anchor=${nextAnchor}`} className="text-brand-gray hover:underline">
-            Next &rarr;
-          </Link>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <div className="flex gap-2 text-sm">
+            <Link
+              href={`/?view=week&anchor=${anchorParam}`}
+              className={`rounded px-3 py-1 ${view === "week" ? "bg-brand-blue/25 font-medium text-blue-950" : "text-brand-gray hover:underline"}`}
+            >
+              Week
+            </Link>
+            <Link
+              href={`/?view=month&anchor=${anchorParam}`}
+              className={`rounded px-3 py-1 ${view === "month" ? "bg-brand-blue/25 font-medium text-blue-950" : "text-brand-gray hover:underline"}`}
+            >
+              Month
+            </Link>
+          </div>
+          <div className="flex items-center gap-3 text-sm">
+            <Link href={`/?view=${view}&anchor=${prevAnchor}`} className="text-brand-gray hover:underline">
+              &larr; Prev
+            </Link>
+            <span className="font-medium">{getRangeLabel(view, anchor)}</span>
+            <Link href={`/?view=${view}&anchor=${nextAnchor}`} className="text-brand-gray hover:underline">
+              Next &rarr;
+            </Link>
+          </div>
         </div>
       </div>
 

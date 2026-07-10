@@ -13,7 +13,7 @@ export default function BookingGrid({
   today: string;
 }) {
   return (
-    <div className="overflow-x-auto rounded-lg border border-zinc-200">
+    <div className="overflow-x-auto rounded-lg border border-zinc-200 bg-white">
       <table className="w-full text-sm">
         <thead>
           <tr className="bg-zinc-50 text-left">
@@ -43,7 +43,7 @@ export default function BookingGrid({
                     ) : (
                       <Link
                         href={`/book?spot=${spot.id}&date=${date}`}
-                        className="inline-block rounded bg-brand-green/25 px-2 py-1 font-medium text-green-900 hover:bg-brand-green/40"
+                        className="inline-block rounded bg-brand-blue/25 px-2 py-1 font-medium text-blue-900 hover:bg-brand-blue/40"
                       >
                         Available
                       </Link>

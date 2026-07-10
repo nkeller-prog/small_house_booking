@@ -58,7 +58,7 @@ export default function BookedCell({
       <button
         onClick={handleCancel}
         disabled={cancelling}
-        className="inline-block rounded bg-brand-pink/25 px-2 py-1 text-pink-900 hover:bg-brand-pink/40 disabled:opacity-50"
+        className="inline-block rounded bg-blue-900 px-2 py-1 text-white hover:bg-blue-950 disabled:opacity-50"
       >
         {cancelling ? "Cancelling..." : "Cancel your booking"}
       </button>
