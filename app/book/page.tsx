@@ -34,7 +34,7 @@ export default async function BookPage({
           &larr; Back to calendar
         </Link>
         <h1 className="mt-4 mb-1 text-xl font-semibold">Book the {spotInfo.label}</h1>
-        <p className="mb-6 text-brand-gray">{format(parseISO(date), "EEEE, MMMM d, yyyy")}</p>
+        <p className="mb-6 text-brand-gray">{format(parseISO(date), "EEEE, MMMM d")}</p>
         <BookingForm spot={spotInfo.id} date={date} />
       </div>
     </main>
