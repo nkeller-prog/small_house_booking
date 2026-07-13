@@ -1,12 +1,11 @@
 import {
+  addDays,
   addMonths,
   addWeeks,
   eachDayOfInterval,
   endOfMonth,
-  endOfWeek,
   format,
   startOfMonth,
-  startOfWeek,
 } from "date-fns";
 
 export type ViewMode = "week" | "month";
@@ -24,8 +23,8 @@ export function parseAnchor(value: string | undefined): Date {
 }
 
 export function getRangeDates(view: ViewMode, anchor: Date): string[] {
-  const start = view === "week" ? startOfWeek(anchor) : startOfMonth(anchor);
-  const end = view === "week" ? endOfWeek(anchor) : endOfMonth(anchor);
+  const start = view === "week" ? anchor : startOfMonth(anchor);
+  const end = view === "week" ? addDays(anchor, 6) : endOfMonth(anchor);
   return eachDayOfInterval({ start, end }).map((d) => format(d, "yyyy-MM-dd"));
 }
 
@@ -36,7 +35,6 @@ export function getAdjacentAnchor(view: ViewMode, anchor: Date, direction: 1 | -
 
 export function getRangeLabel(view: ViewMode, anchor: Date): string {
   if (view === "month") return format(anchor, "MMMM yyyy");
-  const start = startOfWeek(anchor);
-  const end = endOfWeek(anchor);
-  return `${format(start, "MMM d")} – ${format(end, "MMM d, yyyy")}`;
+  const end = addDays(anchor, 6);
+  return `${format(anchor, "MMM d")} – ${format(end, "MMM d, yyyy")}`;
 }
