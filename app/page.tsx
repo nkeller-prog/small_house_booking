@@ -49,8 +49,8 @@ export default async function HomePage({
   const nextAnchor = getAdjacentAnchor(view, anchor, 1);
 
   return (
-    <main className="mx-auto max-w-3xl px-4 py-10">
-      <div className="mb-6 rounded-2xl bg-white/60 p-4 backdrop-blur-sm">
+    <>
+      <header className="w-full bg-white/60 px-4 py-4 backdrop-blur-sm sm:px-8">
         <h1 className="mb-1 text-3xl font-extrabold text-brand-blue">Fab 2 House</h1>
         <p className="mb-4 text-brand-gray">Choose a bed and a night to reserve your stay.</p>
 
@@ -79,15 +79,17 @@ export default async function HomePage({
             </Link>
           </div>
         </div>
-      </div>
+      </header>
 
-      {loadError ? (
-        <p className="text-red-600">
-          Couldn&apos;t load the calendar right now. Please refresh the page.
-        </p>
-      ) : (
-        <BookingGrid dates={dates} bookingMap={bookingMap} today={today} />
-      )}
-    </main>
+      <main className="px-4 py-10 sm:px-8">
+        {loadError ? (
+          <p className="text-red-600">
+            Couldn&apos;t load the calendar right now. Please refresh the page.
+          </p>
+        ) : (
+          <BookingGrid dates={dates} bookingMap={bookingMap} today={today} />
+        )}
+      </main>
+    </>
   );
 }
